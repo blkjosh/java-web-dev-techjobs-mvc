@@ -22,6 +22,14 @@ public class SearchController {
         model.addAttribute("columns", columnChoices);
         return "search";
     }
+    //parameters could be wrong
+    @RequestMapping(value = "results")
+    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String SearchType) {
+
+        return "search/results";
+    }
+
+
 
     // TODO #3 - Create a handler to process a search request and render the updated search view.
 
