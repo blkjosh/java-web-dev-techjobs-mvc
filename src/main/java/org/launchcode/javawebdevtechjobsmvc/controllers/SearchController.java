@@ -22,11 +22,21 @@ public class SearchController {
         model.addAttribute("columns", columnChoices);
         return "search";
     }
-    //parameters could be wrong
-    @RequestMapping(value = "results")
-    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String SearchType) {
 
-        return "search/results";
+    @RequestMapping(value = "results")
+    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String searchType) {
+        ArrayList<Job> jobs;
+        if (searchTerm.toLowerCase().equals("all")||searchTerm.isEmpty()) {
+            jobs = JobData.findAll();
+            model.addAttribute("title", "All Jobs");
+        }
+        else {
+            jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+            model.addAttribute("title", "Jobs with " + columnChoices.get(searchType) + ": " + searchTerm);
+        }
+        model.addAttribute("jobs", jobs);
+
+        return "search";
     }
 
 
